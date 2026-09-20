@@ -1,0 +1,44 @@
+{
+  "brand": {
+    "Toyota": 355,
+    "Honda": 317,
+    "Ford": 260,
+    "Hyundai": 203,
+    "Kia": 173,
+    "Subaru": 140,
+    "BMW": 127,
+    "Mercedes": 123,
+    "Tesla": 102
+  },
+  "body_style": {
+    "SUV": 589,
+    "sedan": 587,
+    "hatchback": 284,
+    "pickup": 245,
+    "coupe": 95
+  },
+  "fuel_type": {
+    "gasoline": 1095,
+    "hybrid": 304,
+    "diesel": 220,
+    "electric": 140,
+    "nan": 41
+  },
+  "transmission": {
+    "automatic": 1156,
+    "CVT": 362,
+    "manual": 213,
+    "nan": 69
+  },
+  "region": {
+    "Midwest": 459,
+    "South": 456,
+    "West": 454,
+    "Northeast": 431
+  },
+  "seller_type": {
+    "franchise_dealer": 699,
+    "independent_dealer": 647,
+    "private": 454
+  }
+}
