@@ -160,4 +160,4 @@ explicitly permits AI to generate the program. `docs/AI_LOG.md` records its use.
 
 - Sasha Maric: ran the Codex sessions that generated the implementation, experiments, and report (the commits authored "codex").
 - Christopher Chalas: set up the team GitHub repository and ran the fresh-clone verification.
-- Rami: tested the code and verified that the data analysis was accurate and the pipeline worked as intended.
+- Rami Rashid: tested the code and verified that the data analysis was accurate and the pipeline worked as intended.
