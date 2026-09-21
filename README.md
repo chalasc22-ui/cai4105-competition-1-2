@@ -17,8 +17,7 @@ python -m unittest -v test_pipeline
 Run commands from this project folder. The selected settings and all experiment
 results are already supplied. `--mode train` fits only the selected pipeline on all
 1,800 public rows. It saves `artifacts/model.pkl`, its metadata, coefficients, and
-loss trace. The provided artifact can also be used directly with the tested
-dependency versions. Pickle files should only be loaded from a trusted source.
+loss trace. Pickle files should only be loaded from a trusted source.
 
 ## Predict the instructor's hidden CSV
 
@@ -156,3 +155,9 @@ AI assistance: OpenAI ChatGPT/Codex generated and checked the implementation,
 experiments, and documentation. The student must review the core code before the
 presentation. No claim of student review is made by this repository. The handout
 explicitly permits AI to generate the program. `docs/AI_LOG.md` records its use.
+
+## Team and contributions
+
+- Sasha Maric: ran the Codex sessions that generated the implementation, experiments, and report (the commits authored "codex").
+- Christopher Chalas: set up the team GitHub repository and ran the fresh-clone verification.
+- Rami: tested the code and verified that the data analysis was accurate and the pipeline worked as intended.
