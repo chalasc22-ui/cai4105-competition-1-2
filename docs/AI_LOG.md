@@ -78,3 +78,15 @@ Explain the objective and its gradients, the availability decision, the split,
 training-only preprocessing, the learning-rate failure, the regularization
 comparison, and the final prediction command. Do not claim to have done this
 review until it has actually been completed.
+
+## 6. Competition slides supplied later
+
+- Read `Week 1/Competition.pdf` from `Slides_export.zip`. Slide 8 requires a
+  two-page technical report, GitHub source code, and reproduction instructions.
+- Replaced the original seven-page report with a two-page report. The underlying
+  experiment tables, loss traces, code, and selected model are unchanged.
+- Updated the README and presentation notes for the 20-minute talk/live demo and
+  10-minute Q&A. Recorded the later one-page opposing-team review and minimum
+  five technical questions without fabricating review findings.
+- Clarified that the hidden CSV is provided during the final test, according to
+  the handout. Its absence from the initial release is expected.

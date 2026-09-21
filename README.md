@@ -96,7 +96,7 @@ does not constitute an independent final performance estimate.
 | `experiments.py` | Feature/optimizer selection, frozen baseline, controlled L2 runs |
 | `main.py` | Final refit and hidden-test prediction command |
 | `test_pipeline.py` | Eight correctness and I/O tests |
-| `docs/Competition_Report.pdf` | Findings, method, equations, tables, and limitations |
+| `docs/Competition_Report.pdf` | Required two-page technical report |
 | `docs/PRESENTATION_NOTES.md` | Code walkthrough and presentation preparation |
 | `docs/AI_LOG.md` | Actual AI assistance and verification decisions |
 | `results/` | Numeric evidence, configurations, and diagnostic plots |
@@ -122,10 +122,35 @@ instructor hidden features and labels inside ignored `hidden_data/`. The
 `.gitignore` also excludes virtual environments, caches, temporary files, hidden
 CSV patterns, saved model artifacts, and `predictions.csv`.
 
-The handout's submission section refers to the first competition slides, which
-were not supplied. Confirm the exact upload contents and repository-link format
-against those slides. The posted deadline is September 22, 2026 at 11:59 pm; the
-presentation is September 29. Review and understand the code before presenting.
+The supplied `Week 1/Competition.pdf`, slide 8, requires one team solution package:
+
+1. A **two-page technical report** covering the problem, method, experimental
+   design, results, limitations, and conclusions. Use `docs/Competition_Report.pdf`.
+2. Source code **via GitHub**, readable and executable by the opposing team.
+3. A README with installation, dependencies, commands, and expected outputs.
+
+The team should provide the report and the actual GitHub repository URL with its
+Canvas submission. The slides do not specify exactly where Canvas should receive
+the URL; follow any assignment-page instructions for that field or attachment.
+Ensure the instructor and reviewing team can access the repository if it is private.
+The posted deadline is September 22, 2026 at 11:59 pm. One submission is required
+per team, not a separate competing repository for every student.
+
+The September 29 presentation is a **20-minute talk/live demonstration followed
+by 10 minutes of Q&A** (slide 9). Reproduce a main result from the submitted code.
+Everyone must understand the entire project because the other team may choose
+any member to answer. The notes include a timed outline and live-demo commands.
+
+The opposing-team review is a separate, later **one-page evidence-based report**
+(slide 11), and the team must actively ask **at least five technical questions**
+(slide 13). Actual review findings require the opposing team's files and cannot
+be written honestly before those files are received.
+
+The assignment handout, section 5, says the instructor provides the 600-row hidden
+CSV **during the final test**. It is not part of the initial two-file release and
+is not needed to prepare the model or submit the development work. Watch the
+instructor's release instructions rather than assuming a test CSV is already in
+Canvas. Never commit hidden features or labels to the repository.
 
 AI assistance: OpenAI ChatGPT/Codex generated and checked the implementation,
 experiments, and documentation. The student must review the core code before the

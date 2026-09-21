@@ -3,6 +3,37 @@
 Use these notes to understand and explain the work. They are a preparation guide,
 not a record that the student has already reviewed the implementation.
 
+## Required timing and live demonstration
+
+The competition slides require a 20-minute talk including a live demonstration,
+followed by 10 minutes of questions. Every team member should be ready to explain
+any core block. A suggested allocation is:
+
+| Minutes | Content |
+| --- | --- |
+| 0-3 | Problem, prediction time, data, and unavailable financing field |
+| 3-7 | Train/validation split, missing values, categories, and feature choices |
+| 7-11 | Gradient descent, objective, scaling, and convergence |
+| 11-15 | Part I baseline and controlled/repeated L2 results |
+| 15-19 | Live reproduction of the main result and verification |
+| 19-20 | Final model choice and limitations |
+| Next 10 | Questions and defense |
+
+Install dependencies before the talk. From the project directory, the live demo
+can reproduce the baseline and verify the implementation:
+
+```bash
+python experiments.py --part 1
+python -m unittest -v test_pipeline
+```
+
+Show `results/part1_baseline.json` and its validation RMSE near $3,683.24. Explain
+that tiny floating-point differences across computers are possible. Show the
+already generated Part II tables and use `python experiments.py --part 2` if time
+permits. Time these commands on the presentation laptop during rehearsal.
+If the instructor has released the hidden CSV, demonstrate the prediction command
+at the end of these notes. Otherwise demonstrate reproducible public-data results.
+
 ## A short presentation sequence
 
 1. **Problem and timing.** Predict the sale price after inspection but before
@@ -101,3 +132,24 @@ python main.py --mode predict --test hidden_data/car_price_test.csv
 Open the produced `predictions.csv` and confirm the header is
 `listing_id,sale_price_usd_pred`. The program checks the required 600 rows and
 finite predictions before writing. Keep the hidden CSV out of GitHub.
+
+## Later review of the opposing team
+
+After receiving the other team's package, reproduce its results and prepare a
+one-page report with summary, issues, severity, reproduction evidence, adversarial
+tests, and recommendations. Label issue severity as fatal, major, moderate, minor,
+or invalid, as required by the slides. Do not invent findings before reviewing it.
+
+Prepare at least five questions grounded in their actual implementation. Useful
+starting points to adapt after inspection are:
+
+1. Which predictors are available before negotiation and financing, and how did
+   you exclude information that would only become available afterward?
+2. Where are imputation, encoding, and scaling fitted, and how can you demonstrate
+   that validation rows do not affect those statistics?
+3. How did you check that your implemented gradients are correct and that the
+   intercept is not penalized?
+4. Which settings were held fixed across L2 strengths, and how consistent was any
+   RMSE improvement across different splits?
+5. How does the submitted pipeline handle unseen categories, increased missingness,
+   column order changes, and exactly one finite prediction per test ID?
