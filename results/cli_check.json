@@ -1,0 +1,25 @@
+{
+  "cli_loaded_saved_model": true,
+  "temporary_fixture_rows": 600,
+  "finite_predictions": true,
+  "ids_preserved": true,
+  "schema_exact": true,
+  "extra_missing_and_unseen_categories": true,
+  "real_hidden_data_used": false,
+  "imports": [
+    "argparse",
+    "hashlib",
+    "json",
+    "main",
+    "matplotlib",
+    "numpy",
+    "pandas",
+    "pathlib",
+    "pickle",
+    "preprocessing",
+    "regression",
+    "sys",
+    "tempfile",
+    "unittest"
+  ]
+}
