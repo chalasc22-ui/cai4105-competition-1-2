@@ -136,11 +136,13 @@ def part2(data):
     repeated.to_csv(RESULTS / "part2_repeated_splits.csv", index=False)
     summary = repeated.groupby("l2").validation_rmse.agg(["mean", "min", "max"])
     summary.to_csv(RESULTS / "part2_summary.csv")
-    # Decide only from prediction RMSE, not from the size of the coefficients.
-    selected = positive if summary.loc[positive, "mean"] < summary.loc[0.0, "mean"] else 0.0
+    # Sub-dollar differences in RMSE are treated as a practical tie.
+    improvement = float(summary.loc[0.0, "mean"] - summary.loc[positive, "mean"])
+    selected = positive if improvement > 1.0 else 0.0
     decision = {"variant": variant, "settings": settings, "l2": selected,
                 "selected_positive_l2": positive,
-                "decision_rule": "Choose positive L2 only if its mean RMSE across five additional splits is lower.",
+                "decision_rule": "Choose positive L2 only if five-split mean RMSE improves by more than $1; otherwise keep Part I.",
+                "rmse_tie_tolerance_usd": 1.0, "positive_improvement_usd": improvement,
                 "repeated_split_seeds": [7, 21, 84, 123, 2026],
                 "unregularized_mean_rmse": float(summary.loc[0.0, "mean"]),
                 "positive_mean_rmse": float(summary.loc[positive, "mean"]),

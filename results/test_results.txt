@@ -1,0 +1,14 @@
+test_cached_updates_equal_residual_updates (test_pipeline.PipelineTests.test_cached_updates_equal_residual_updates) ... ok
+test_finite_difference_gradients (test_pipeline.PipelineTests.test_finite_difference_gradients) ... ok
+test_known_line_and_constant_target (test_pipeline.PipelineTests.test_known_line_and_constant_target) ... ok
+test_missing_unknown_reordered_and_all_missing_training (test_pipeline.PipelineTests.test_missing_unknown_reordered_and_all_missing_training) ... ok
+test_preprocessing_is_train_only_and_excludes_leakage (test_pipeline.PipelineTests.test_preprocessing_is_train_only_and_excludes_leakage) ... ok
+test_rejects_nonfinite_training_and_unstable_rate (test_pipeline.PipelineTests.test_rejects_nonfinite_training_and_unstable_rate) ... ok
+test_six_hundred_predictions_preserve_ids_and_schema (test_pipeline.PipelineTests.test_six_hundred_predictions_preserve_ids_and_schema) ... ok
+test_zero_l2_and_known_ridge_solution (test_pipeline.PipelineTests.test_zero_l2_and_known_ridge_solution) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.157s
+
+OK
+Wrote 600 predictions to /tmp/tmpg8lrpobt/output.csv.

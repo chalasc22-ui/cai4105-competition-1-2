@@ -1,0 +1,23 @@
+{
+  "variant": "age_mileage",
+  "settings": {
+    "learning_rate": 0.05,
+    "max_iter": 150000,
+    "tolerance": 1e-05
+  },
+  "l2": 0.0,
+  "selected_positive_l2": 1e-05,
+  "decision_rule": "Choose positive L2 only if five-split mean RMSE improves by more than $1; otherwise keep Part I.",
+  "rmse_tie_tolerance_usd": 1.0,
+  "positive_improvement_usd": 0.018487904433186486,
+  "repeated_split_seeds": [
+    7,
+    21,
+    84,
+    123,
+    2026
+  ],
+  "unregularized_mean_rmse": 3904.6929494255833,
+  "positive_mean_rmse": 3904.67446152115,
+  "positive_wins": 4
+}
