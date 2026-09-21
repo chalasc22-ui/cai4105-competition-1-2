@@ -1,0 +1,21 @@
+{
+  "variant": "age_mileage",
+  "split_seed": 42,
+  "validation_fraction": 0.2,
+  "l2": 0.0,
+  "settings": {
+    "learning_rate": 0.05,
+    "max_iter": 150000,
+    "tolerance": 1e-05
+  },
+  "n_features": 49,
+  "learning_rate": 0.05,
+  "max_iter": 150000,
+  "tolerance": 1e-05,
+  "train_rmse": 3685.234675100932,
+  "validation_rmse": 3683.2353052615977,
+  "coefficient_norm": 8005.303159705267,
+  "iterations": 69583,
+  "converged": true,
+  "max_abs_gradient": 9.999886970035732e-06
+}
