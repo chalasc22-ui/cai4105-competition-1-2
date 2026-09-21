@@ -102,9 +102,70 @@ def part1(data):
     print("FROZEN BASELINE", baseline, flush=True)
 
 
+def part2(data):
+    baseline_path = RESULTS / "part1_baseline.json"
+    if not baseline_path.exists():
+        raise FileNotFoundError("Complete Part I first: python experiments.py --part 1")
+    baseline = json.loads(baseline_path.read_text())
+    settings, variant = baseline["settings"], baseline["variant"]
+    prep, X, V, y, v = prepare_split(data, variant, baseline["split_seed"])
+    rows = []
+    for strength in [0.0, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1.0]:
+        model, record = fit_record(X, V, y, v, {**settings, "l2": strength})
+        rows.append(record)
+        pd.DataFrame(model.history_).to_csv(RESULTS / f"l2_{strength:g}_loss_trace.csv", index=False)
+        if strength == 0:
+            frozen = np.load(RESULTS / "part1_baseline_parameters.npz")
+            difference = float(np.max(np.abs(model.predict(V) - frozen["validation_predictions"])))
+            assert difference < 1e-6, "L2=0 did not reproduce the Part I predictions."
+            save_json("lambda_zero_check.json", {"max_prediction_difference_usd": difference,
+                      "same_coefficients": bool(np.allclose(model.coef_, frozen["coef"], atol=1e-8, rtol=0))})
+        print("lambda comparison", record, flush=True)
+    comparison = pd.DataFrame(rows)
+    comparison.to_csv(RESULTS / "part2_lambda_comparison.csv", index=False)
+    positive = float(comparison[comparison.l2 > 0].sort_values("validation_rmse").iloc[0].l2)
+    repeated = []
+    # These five predeclared seeds are separate from the initial selection seed.
+    for seed in [7, 21, 84, 123, 2026]:
+        prep, X, V, y, v = prepare_split(data, variant, seed)
+        for strength in [0.0, positive]:
+            model, record = fit_record(X, V, y, v, {**settings, "l2": strength})
+            repeated.append({"seed": seed, **record})
+            print("repeated", repeated[-1], flush=True)
+    repeated = pd.DataFrame(repeated)
+    repeated.to_csv(RESULTS / "part2_repeated_splits.csv", index=False)
+    summary = repeated.groupby("l2").validation_rmse.agg(["mean", "min", "max"])
+    summary.to_csv(RESULTS / "part2_summary.csv")
+    # Decide only from prediction RMSE, not from the size of the coefficients.
+    selected = positive if summary.loc[positive, "mean"] < summary.loc[0.0, "mean"] else 0.0
+    decision = {"variant": variant, "settings": settings, "l2": selected,
+                "selected_positive_l2": positive,
+                "decision_rule": "Choose positive L2 only if its mean RMSE across five additional splits is lower.",
+                "repeated_split_seeds": [7, 21, 84, 123, 2026],
+                "unregularized_mean_rmse": float(summary.loc[0.0, "mean"]),
+                "positive_mean_rmse": float(summary.loc[positive, "mean"]),
+                "positive_wins": int(sum(repeated[repeated.l2 == positive].validation_rmse.to_numpy()
+                                         < repeated[repeated.l2 == 0].validation_rmse.to_numpy()))}
+    save_json("selected_config.json", decision)
+    figure, axes = plt.subplots(1, 2, figsize=(11, 4.2))
+    labels = [f"{value:g}" for value in comparison.l2]
+    axes[0].plot(labels, comparison.validation_rmse, marker="o", color="#24577b")
+    axes[0].set(xlabel="L2 strength", ylabel="Validation RMSE (USD)", title="Controlled comparison: seed 42")
+    axes[1].plot(labels, comparison.coefficient_norm, marker="o", color="#ba552c")
+    axes[1].set(xlabel="L2 strength", ylabel="Coefficient L2 norm", title="Shrinkage with standardized features")
+    figure.tight_layout()
+    figure.savefig(RESULTS / "part2_comparison.png", dpi=180)
+    plt.close(figure)
+    print("FINAL CHOICE", decision, flush=True)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--part", choices=["1"], default="1")
+    parser.add_argument("--part", choices=["1", "2"], default="1")
     parser.add_argument("--train", type=Path, default=TRAIN_PATH)
     args = parser.parse_args()
-    part1(pd.read_csv(args.train))
+    data = pd.read_csv(args.train)
+    if args.part == "1":
+        part1(data)
+    else:
+        part2(data)

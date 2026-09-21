@@ -7,16 +7,17 @@ def rmse(actual, predicted):
 
 
 class LinearRegressionGD:
-    def __init__(self, learning_rate=0.05, max_iter=150000, tolerance=0.001):
+    def __init__(self, learning_rate=0.05, max_iter=150000, tolerance=0.001, l2=0.0):
         self.learning_rate = learning_rate
         self.max_iter = max_iter
         self.tolerance = tolerance
+        self.l2 = l2
 
     @staticmethod
-    def objective_gradient(X, y, weights, intercept):
+    def objective_gradient(X, y, weights, intercept, l2=0.0):
         error = X @ weights + intercept - y
-        objective = float(np.mean(error ** 2))
-        gradient_w = 2 * X.T @ error / len(y)
+        objective = float(np.mean(error ** 2) + l2 * np.sum(weights ** 2))
+        gradient_w = 2 * X.T @ error / len(y) + 2 * l2 * weights
         gradient_b = float(2 * error.mean())
         return objective, gradient_w, gradient_b
 
@@ -27,7 +28,7 @@ class LinearRegressionGD:
             raise ValueError("Expected a nonempty feature matrix and matching target vector.")
         if not np.isfinite(X).all() or not np.isfinite(y).all():
             raise ValueError("Training inputs must be finite.")
-        if self.learning_rate <= 0 or self.max_iter < 1 or self.tolerance < 0:
+        if self.learning_rate <= 0 or self.max_iter < 1 or self.tolerance < 0 or self.l2 < 0:
             raise ValueError("Invalid gradient-descent settings.")
         design = np.column_stack([X, np.ones(len(X))])
         # These products cache the exact batch gradient; no equation is solved.
@@ -39,12 +40,14 @@ class LinearRegressionGD:
         self.converged_ = False
         for iteration in range(self.max_iter + 1):
             gradient = 2 * (gram @ theta - cross)
+            # The final parameter is the intercept and is never penalized.
+            gradient[:-1] += 2 * self.l2 * theta[:-1]
             largest_gradient = float(np.max(np.abs(gradient)))
             if not np.isfinite(theta).all() or not np.isfinite(gradient).all():
                 raise FloatingPointError("Diverged; reduce the learning rate.")
             converged = largest_gradient <= self.tolerance
             if iteration % 100 == 0 or converged or iteration == self.max_iter:
-                loss = float(np.mean((design @ theta - y) ** 2))
+                loss = float(np.mean((design @ theta - y) ** 2) + self.l2 * np.sum(theta[:-1] ** 2))
                 if not np.isfinite(loss):
                     raise FloatingPointError("Nonfinite loss; reduce the learning rate.")
                 if self.history_ and loss > self.history_[-1]["objective"] + 1e-7 * max(1, self.history_[-1]["objective"]):
