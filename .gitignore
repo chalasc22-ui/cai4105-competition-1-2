@@ -6,10 +6,17 @@ __pycache__/
 .DS_Store
 tmp/
 *.tmp
-hidden_data/
 *test*.csv
 *hidden*.csv
 *labels*.csv
 predictions.csv
 artifacts/
 
+*.pyc
+.idea/
+.vscode/
+# Instructor data: never committed
+/hidden_data/*
+!/hidden_data/.gitkeep
+car_price_test*.csv
+/predictions.csv
